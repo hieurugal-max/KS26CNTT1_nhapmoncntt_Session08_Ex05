@@ -1,0 +1,22 @@
+Phần 1: Thiết kế kiến trúc
+1. Header block: Ghi tên script, tác giả, ngày tạo bằng dấu #.
+2. Biến cấu hình: Khai báo đường dẫn file log và file báo cáo bằng biến $.
+3. Thông báo tiến trình: Dùng Write-Host để hiển thị trạng thái.
+4. Logic xử lý: Dùng Get-Content đọc log, Select-String lọc lỗi 404 và >> ghi nối kết quả vào file báo cáo.
+Phần 2: Nội dung file auto_report.ps1
+ Ten script: auto_report.ps1
+ Tac gia: Hoc vien
+ Ngay tao: 13/10/2026
+
+duong_dan_log = "server.log"
+duong_dan_bao_cao = "report.txt"
+
+Write-Host "Dang loc log..."
+
+" HE THONG TU DONG LOC LOG " > $duong_dan_bao_cao
+
+Get-Content $duong_dan_log |
+    Select-String "404" |
+    ForEach-Object { $_.Line } >> $duong_dan_bao_cao
+
+Write-Host "Da loc log xong!"
